@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
-const {version} = require('../package.json')
+const { version } = require('../package.json')
 const path = require('path')
 const server = require('..')
+const { isYamlExt } = require('../src/utils.js')
 
 const help = () => `
     openapi-editor [opts] filename.yaml
 
-    -h,--help             print help and exit
-    -v,--version          print version and exit
-    -p,--port <number>    port to start server
+    -h, --help            print help and exit
+    -v, --version         print version and exit
+    -p, --port <number>   port to start server
 `
 
 function argv (args) {
@@ -41,7 +42,7 @@ function argv (args) {
       }
       default: {
         const basename = path.basename(arg)
-        if (/\.ya?ml$/.test(basename)) {
+        if (isYamlExt(basename)) {
           cmd.file = basename
         }
       }

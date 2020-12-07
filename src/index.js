@@ -1,13 +1,18 @@
 const fs = require('fs')
 const path = require('path')
 const express = require('express')
-const multer  = require('multer')
+const multer = require('multer')
 
-function setupApp ({port, file = 'openapi-petstore.yaml'} = {}) {
+const { sanitizeFilename, isYamlExt, httpError } = require('./utils.js')
+
+function setupApp ({ port, file = 'openapi-petstore.yaml' } = {}) {
   const app = express()
   const cwd = process.cwd()
   const upload = multer({ dest: cwd })
 
+  file = sanitizeFilename(file)
+
+  // eslint-disable-next-line no-unused-vars
   const logger = (req, res, next) => {
     const time = Date.now()
     res.on('finish', () => {
@@ -32,7 +37,12 @@ function setupApp ({port, file = 'openapi-petstore.yaml'} = {}) {
 
   app.post('/upload', upload.single(), function (req, res, next) {
     const { file, yaml } = req.body
-    const filename = path.resolve(cwd, file)
+    const sanitized = sanitizeFilename(file)
+    if (!isYamlExt(sanitized)) {
+      next(httpError(400, new Error('Not a yaml file')))
+      return
+    }
+    const filename = path.resolve(cwd, sanitized)
     console.log('INFO: writing to %s', filename)
     fs.writeFile(filename, yaml, 'utf8', (err) => {
       if (err) {
@@ -46,9 +56,8 @@ function setupApp ({port, file = 'openapi-petstore.yaml'} = {}) {
   app.use('/',
     (req, res, next) => {
       let err
-      if (!/.ya?ml$/.test(req.url)) {
-        err = new Error('Not Found ' + req.url)
-        err.status = 404
+      if (!isYamlExt(req.url)) {
+        err = httpError(404, new Error(`Not Found ${req.url}`))
       }
       next(err)
     },
@@ -73,5 +82,5 @@ module.exports = setupApp
 
 if (module === require.main) {
   const port = process.env.PORT || 8000
-  setupApp({port})
+  setupApp({ port })
 }

@@ -11,11 +11,15 @@
     "openapi-editor": "./bin/openapi-editor.js"
   },
   "scripts": {
+    "lint": "standard --env node --env mocha --fix **/*.js",
     "start": "node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "dependencies": {
     "express": "^4.17.1",
     "multer": "^1.4.2"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1"
   }
 }
