@@ -24389,7 +24389,8 @@
             }, I.a.createElement("div", {
               className: "topbar-wrapper"
             }, I.a.createElement(u, {
-              href: "#"
+              href: "http://spec.openapis.org/oas/v3.0.3",
+              target: '_blanc'
             }, I.a.createElement("img", {
               height: "35",
               className: "topbar-logo__img",
