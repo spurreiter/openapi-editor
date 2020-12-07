@@ -4,6 +4,7 @@
   "private": true,
   "description": "standalone openapi editor",
   "keywords": [],
+  "homepage": "https://github.com/spurreiter/openapi-editor",
   "license": "Apache-2.0",
   "author": "spurreiter",
   "main": "src/index.js",
