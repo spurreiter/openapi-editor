@@ -53,17 +53,20 @@
   const filename = query.get('file') || 'openapi-petshop.yaml'
   console.log('file="%s"', filename)
 
+  function uploadYaml () {
+    const yaml = window.editor.specSelectors.specStr()
+    let formData = new FormData()
+    formData.append('file', filename)
+    formData.append('yaml', yaml)
+    fetch('/upload', {method: "POST", body: formData})
+  }
+  window._uploadYaml = uploadYaml
+
   document.body.addEventListener('keydown', (ev) => {
     if (ev.keyCode === 83 && (ev.metaKey || ev.ctrlKey)) {
       ev.preventDefault()
       ev.returnValue = false
-      setTimeout(() => {
-        const yaml = window.editor.specSelectors.specStr()
-        let formData = new FormData()
-        formData.append('file', filename)
-        formData.append('yaml', yaml)
-        fetch('/upload', {method: "POST", body: formData})
-      }, 500)
+      setTimeout(() => uploadYaml(), 500)
     }
   })
 

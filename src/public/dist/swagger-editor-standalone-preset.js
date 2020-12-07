@@ -24375,10 +24375,12 @@
               onClick: this.saveAsJson
             }, "Save as JSON"))), m.push(I.a.createElement("li", null, I.a.createElement("button", {
               type: "button",
+              style: { display: 'none' },
               onClick: this.saveAsYaml
             }, "Convert and save as YAML")))) : (m.push(I.a.createElement("li", null, I.a.createElement("button", {
               type: "button",
-              onClick: this.saveAsYaml
+              // onClick: this.saveAsYaml
+              onClick: window._uploadYaml
             }, "Save as YAML"))), m.push(I.a.createElement("li", null, I.a.createElement("button", {
               type: "button",
               onClick: this.saveAsJson
