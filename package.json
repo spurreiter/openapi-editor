@@ -1,0 +1,21 @@
+{
+  "name": "openapi-editor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "standalone openapi editor",
+  "keywords": [],
+  "license": "Apache-2.0",
+  "author": "spurreiter",
+  "main": "src/index.js",
+  "bin": {
+    "openapi-editor": "./bin/openapi-editor.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  }
+}
